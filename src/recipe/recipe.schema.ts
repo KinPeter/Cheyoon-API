@@ -14,11 +14,19 @@ export class Recipe {
 
   @ApiProperty()
   @Prop({ required: true })
+  updatedAt: Date
+
+  @ApiProperty()
+  @Prop({ required: true })
   userId: UUID
 
   @ApiProperty()
   @Prop({ required: true })
   name: string
+
+  @ApiProperty()
+  @Prop({ required: true })
+  photoUrl: string
 
   @ApiProperty()
   @Prop({ required: true })
@@ -33,7 +41,7 @@ export class Recipe {
   servings: number
 
   @ApiProperty()
-  @Prop({ type: [Ingredient], required: true })
+  @Prop({ required: true })
   ingredients: Ingredient[]
 }
 

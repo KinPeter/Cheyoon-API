@@ -1,0 +1,66 @@
+import { Body, Controller, Get, HttpCode, Param, Post, UseGuards } from '@nestjs/common'
+import {
+  ApiBearerAuth,
+  ApiForbiddenResponse,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+  ApiUnauthorizedResponse,
+} from '@nestjs/swagger'
+import { RecipeService } from './recipe.service'
+import { GetUser } from '../common/get-user.decorator'
+import { UserDocument } from '../user/user.schema'
+import { RecipeInput, RecipeListItem } from './recipe.dto'
+import { AuthGuard } from '@nestjs/passport'
+import { UUID } from '../common/uuid'
+import { Recipe } from './recipe.schema'
+import { TokenResponse } from '../user/user.dto'
+import { YupValidationPipe } from '../common/nestjs-yup/yup-validation.pipe'
+
+@ApiTags('Recipes')
+@Controller('recipe')
+export class RecipeController {
+  constructor(private readonly recipeService: RecipeService) {}
+
+  @Get('/list')
+  @UseGuards(AuthGuard())
+  @ApiOperation({ summary: 'List base info of recipes for a user' })
+  @ApiBearerAuth()
+  @ApiOkResponse({ type: [RecipeListItem], description: 'List of recipes' })
+  @ApiNotFoundResponse({ description: 'Recipe not found' })
+  @ApiUnauthorizedResponse({ description: 'User is not authenticated' })
+  @ApiForbiddenResponse({ description: 'User has no access rights to the requested content' })
+  public async listForUser(@GetUser() user: UserDocument): Promise<RecipeListItem[]> {
+    return this.recipeService.listUserRecipes(user.id)
+  }
+
+  @Get('/:id')
+  @UseGuards(AuthGuard())
+  @ApiOperation({ summary: 'Get a recipe with all details by ID' })
+  @ApiBearerAuth()
+  @ApiOkResponse({ type: Recipe, description: 'A recipe' })
+  @ApiNotFoundResponse({ description: 'Recipe not found' })
+  @ApiUnauthorizedResponse({ description: 'User is not authenticated' })
+  @ApiForbiddenResponse({ description: 'User has no access rights to the requested content' })
+  public async getById(@GetUser() user: UserDocument, @Param('id') id: UUID): Promise<Recipe> {
+    return this.recipeService.getById(id, user.id)
+  }
+
+  @Post()
+  @HttpCode(201)
+  @UseGuards(AuthGuard())
+  @ApiOperation({ summary: 'Create a new recipe' })
+  @ApiBearerAuth()
+  @ApiOkResponse({ type: Recipe, description: 'Recipe created' })
+  @ApiUnauthorizedResponse({ description: 'User is not authenticated' })
+  @ApiForbiddenResponse({ description: 'User has no access rights to the requested content' })
+  public async create(
+    @GetUser() user: UserDocument,
+    @Body(YupValidationPipe) data: RecipeInput
+  ): Promise<Recipe> {
+    return this.recipeService.createRecipe(user.id, data)
+  }
+
+  // TODO: Update, Delete
+}

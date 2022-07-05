@@ -12,6 +12,7 @@ import {
 import { UsersRepository } from './user.repository'
 import { ErrorCode } from '../common/error-codes'
 import { UserDocument } from './user.schema'
+import { UUID } from '../common/uuid'
 
 @Injectable()
 export class UserService {
@@ -37,8 +38,7 @@ export class UserService {
     return { id: result.id }
   }
 
-  public async login(authCredentialsDto: AuthRequest): Promise<LoginResponse> {
-    const { email, password } = authCredentialsDto
+  public async login({ email, password }: AuthRequest): Promise<LoginResponse> {
     const user = await this.usersRepository.findUserByEmail(email)
     const validated = !!user
       ? await this.validatePassword(password, user.salt, user.password)
@@ -61,7 +61,7 @@ export class UserService {
     }
   }
 
-  public async refreshToken(userId: string): Promise<TokenResponse> {
+  public async refreshToken(userId: UUID): Promise<TokenResponse> {
     const user = await this.usersRepository.findUserById(userId)
     const token = this.jwtService.sign({ email: user.email })
     const expiresAt = (this.jwtService.decode(token) as JwtDecodedToken).exp * 1000
@@ -87,7 +87,7 @@ export class UserService {
     this.logger.log(`User changed password (id: ${user.id})`)
   }
 
-  public async deleteUser(userId: string): Promise<void> {
+  public async deleteUser(userId: UUID): Promise<void> {
     await this.usersRepository.deleteUser(userId)
     this.logger.log(`User account deleted (id: ${userId})`)
   }

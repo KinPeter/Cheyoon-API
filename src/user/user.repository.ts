@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose'
 import { User, UserDocument } from './user.schema'
 import { Model } from 'mongoose'
 import { v4 as uuid } from 'uuid'
+import { UUID } from '../common/uuid'
 
 @Injectable()
 export class UsersRepository {
@@ -12,7 +13,7 @@ export class UsersRepository {
     return await this.userModel.findOne({ email }).exec()
   }
 
-  public async findUserById(id: string): Promise<UserDocument> {
+  public async findUserById(id: UUID): Promise<UserDocument> {
     return await this.userModel.findOne({ id }).exec()
   }
 
@@ -29,7 +30,7 @@ export class UsersRepository {
     })
   }
 
-  public async updatePassword(id: string, password: string, salt: string): Promise<void> {
+  public async updatePassword(id: UUID, password: string, salt: string): Promise<void> {
     const user = await this.userModel
       .findOneAndUpdate(
         { id },
@@ -44,7 +45,7 @@ export class UsersRepository {
     }
   }
 
-  public async deleteUser(id: string): Promise<void> {
+  public async deleteUser(id: UUID): Promise<void> {
     const user = await this.userModel.findOneAndDelete({ id }).exec()
     if (!user) {
       throw new NotFoundException()

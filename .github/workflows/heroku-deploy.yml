@@ -1,0 +1,30 @@
+name: Heroku Deploy
+
+on:
+  push:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  api-deploy:
+    name: Deploy to Heroku
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: cheyoon-api
+          heroku_email: kinpeter85@gmail.com
+          usedocker: true
+          docker_build_args: |
+            ARG_JC_MONGO_CONNECTION
+            ARG_JC_JWT_SECRET
+            ARG_JC_TOKEN_EXPIRY
+        env:
+          ARG_JC_MONGO_CONNECTION: ${{ secrets.MONGO_CONNECTION }}
+          ARG_JC_JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          ARG_JC_TOKEN_EXPIRY: 7d
+

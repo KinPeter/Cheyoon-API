@@ -3,6 +3,7 @@ import { RecipeRepository } from './recipe.repository'
 import { UUID } from '../common/uuid'
 import { RecipeInput, RecipeListItem } from './recipe.dto'
 import { Recipe } from './recipe.schema'
+import { IdResponse } from '../common/id-response'
 
 @Injectable()
 export class RecipeService {
@@ -16,11 +17,11 @@ export class RecipeService {
     return this.recipeRepository.findOne(id, userId)
   }
 
-  public async createRecipe(userId: UUID, data: RecipeInput): Promise<Recipe> {
+  public async createRecipe(userId: UUID, data: RecipeInput): Promise<IdResponse> {
     return this.recipeRepository.create(userId, data)
   }
 
-  public async updateRecipe(id: UUID, userId: UUID, data: RecipeInput): Promise<Recipe> {
+  public async updateRecipe(id: UUID, userId: UUID, data: RecipeInput): Promise<IdResponse> {
     return this.recipeRepository.update(id, userId, data)
   }
 

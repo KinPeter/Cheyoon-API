@@ -12,11 +12,6 @@ export class AuthRequest {
   password: string
 }
 
-export class SignupResponse {
-  @ApiProperty()
-  id: string
-}
-
 export class TokenResponse {
   @ApiProperty()
   token: string

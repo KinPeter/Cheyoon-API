@@ -1,12 +1,6 @@
 import { Body, Controller, Delete, HttpCode, Post, Put, UseGuards } from '@nestjs/common'
 import { UserService } from './user.service'
-import {
-  AuthRequest,
-  LoginResponse,
-  SignupResponse,
-  TokenResponse,
-  UpdatePasswordRequest,
-} from './user.dto'
+import { AuthRequest, LoginResponse, TokenResponse, UpdatePasswordRequest } from './user.dto'
 import { UserDocument } from './user.schema'
 import { GetUser } from '../common/get-user.decorator'
 import { AuthGuard } from '@nestjs/passport'
@@ -23,6 +17,7 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger'
+import { IdResponse } from '../common/id-response'
 
 @ApiTags('Users & Auth')
 @Controller('user')
@@ -32,10 +27,10 @@ export class UserController {
   @Post('/signup')
   @HttpCode(201)
   @ApiOperation({ summary: 'Register a user' })
-  @ApiCreatedResponse({ type: SignupResponse, description: 'User is created' })
+  @ApiCreatedResponse({ type: IdResponse, description: 'User is created' })
   @ApiConflictResponse({ description: 'Email is already registered' })
   @ApiBadRequestResponse({ description: 'Validation error: request data is invalid' })
-  signUp(@Body(YupValidationPipe) data: AuthRequest): Promise<SignupResponse> {
+  signUp(@Body(YupValidationPipe) data: AuthRequest): Promise<IdResponse> {
     return this.usersService.signUp(data)
   }
 

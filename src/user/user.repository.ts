@@ -4,6 +4,7 @@ import { User, UserDocument } from './user.schema'
 import { Model } from 'mongoose'
 import { v4 as uuid } from 'uuid'
 import { UUID } from '../common/uuid'
+import { ErrorCode } from '../common/error-codes'
 
 @Injectable()
 export class UsersRepository {
@@ -41,14 +42,14 @@ export class UsersRepository {
       )
       .exec()
     if (!user) {
-      throw new NotFoundException()
+      throw new NotFoundException(ErrorCode.ITEM_NOT_FOUND)
     }
   }
 
   public async deleteUser(id: UUID): Promise<void> {
     const user = await this.userModel.findOneAndDelete({ id }).exec()
     if (!user) {
-      throw new NotFoundException()
+      throw new NotFoundException(ErrorCode.ITEM_NOT_FOUND)
     }
   }
 }

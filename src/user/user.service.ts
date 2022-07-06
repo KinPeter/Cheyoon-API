@@ -5,7 +5,6 @@ import {
   AuthRequest,
   JwtDecodedToken,
   LoginResponse,
-  SignupResponse,
   TokenResponse,
   UpdatePasswordRequest,
 } from './user.dto'
@@ -13,6 +12,7 @@ import { UsersRepository } from './user.repository'
 import { ErrorCode } from '../common/error-codes'
 import { UserDocument } from './user.schema'
 import { UUID } from '../common/uuid'
+import { IdResponse } from '../common/id-response'
 
 @Injectable()
 export class UserService {
@@ -23,7 +23,7 @@ export class UserService {
     private readonly usersRepository: UsersRepository
   ) {}
 
-  public async signUp(data: AuthRequest): Promise<SignupResponse> {
+  public async signUp(data: AuthRequest): Promise<IdResponse> {
     const user = await this.createInitialUserDocument(data)
 
     const exists = await this.usersRepository.findUserByEmail(data.email)

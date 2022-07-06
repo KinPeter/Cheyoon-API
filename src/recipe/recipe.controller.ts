@@ -1,4 +1,14 @@
-import { Body, Controller, Get, HttpCode, Param, Post, UseGuards } from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  Param,
+  Post,
+  Put,
+  UseGuards,
+} from '@nestjs/common'
 import {
   ApiBearerAuth,
   ApiForbiddenResponse,
@@ -15,8 +25,8 @@ import { RecipeInput, RecipeListItem } from './recipe.dto'
 import { AuthGuard } from '@nestjs/passport'
 import { UUID } from '../common/uuid'
 import { Recipe } from './recipe.schema'
-import { TokenResponse } from '../user/user.dto'
 import { YupValidationPipe } from '../common/nestjs-yup/yup-validation.pipe'
+import { IdResponse } from '../common/id-response'
 
 @ApiTags('Recipes')
 @Controller('recipe')
@@ -58,9 +68,37 @@ export class RecipeController {
   public async create(
     @GetUser() user: UserDocument,
     @Body(YupValidationPipe) data: RecipeInput
-  ): Promise<Recipe> {
+  ): Promise<IdResponse> {
     return this.recipeService.createRecipe(user.id, data)
   }
 
-  // TODO: Update, Delete
+  @Put('/:id')
+  @HttpCode(200)
+  @UseGuards(AuthGuard())
+  @ApiOperation({ summary: 'Update a recipe' })
+  @ApiBearerAuth()
+  @ApiOkResponse({ type: Recipe, description: 'Recipe updated' })
+  @ApiNotFoundResponse({ description: 'Recipe not found' })
+  @ApiUnauthorizedResponse({ description: 'User is not authenticated' })
+  @ApiForbiddenResponse({ description: 'User has no access rights to the requested content' })
+  public async update(
+    @GetUser() user: UserDocument,
+    @Body(YupValidationPipe) data: RecipeInput,
+    @Param('id') id: UUID
+  ): Promise<IdResponse> {
+    return this.recipeService.updateRecipe(id, user.id, data)
+  }
+
+  @Delete('/:id')
+  @HttpCode(200)
+  @UseGuards(AuthGuard())
+  @ApiOperation({ summary: 'Delete a recipe' })
+  @ApiBearerAuth()
+  @ApiOkResponse({ type: Recipe, description: 'Recipe deleted' })
+  @ApiNotFoundResponse({ description: 'Recipe not found' })
+  @ApiUnauthorizedResponse({ description: 'User is not authenticated' })
+  @ApiForbiddenResponse({ description: 'User has no access rights to the requested content' })
+  public async delete(@GetUser() user: UserDocument, @Param('id') id: UUID): Promise<void> {
+    return this.recipeService.deleteRecipe(id, user.id)
+  }
 }

@@ -5,7 +5,7 @@ import { UUID } from '../common/uuid'
 
 export class Ingredient {
   @ApiProperty()
-  amount: string
+  amount: number
 
   @ApiProperty()
   unit: string
@@ -33,7 +33,7 @@ export class RecipeInput extends RecipeBase {
   @ApiProperty()
   servings: number
 
-  @ApiProperty()
+  @ApiProperty({ type: [Ingredient] })
   ingredients: Ingredient[]
 }
 

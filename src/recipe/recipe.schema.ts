@@ -40,7 +40,7 @@ export class Recipe {
   @Prop({ required: true })
   servings: number
 
-  @ApiProperty()
+  @ApiProperty({ type: [Ingredient] })
   @Prop({ required: true })
   ingredients: Ingredient[]
 }

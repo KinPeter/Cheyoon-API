@@ -14,7 +14,7 @@ export class RecipeRepository {
 
   public async findAllForUser(userId: UUID): Promise<Recipe[]> {
     return await this.recipeModel
-      .find({ userId }, ['id', 'updatedAt', 'name', 'photoUrl', 'tags'], {
+      .find({ userId }, ['id', 'updatedAt', 'name', 'photoUrl', 'tags', 'cookingTime'], {
         sort: { updatedAt: -1 },
       })
       .exec()

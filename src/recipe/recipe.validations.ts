@@ -15,6 +15,7 @@ export const RecipeInputSchema = yup.object({
     .array(yup.string().required(ErrorCode.FIELD_REQUIRED))
     .required(ErrorCode.FIELD_REQUIRED),
   servings: yup.number().min(1, ErrorCode.INVALID_VALUE).required(ErrorCode.FIELD_REQUIRED),
+  cookingTime: yup.string().required(ErrorCode.FIELD_REQUIRED),
   ingredients: yup
     .array(IngredientSchema)
     .min(1, ErrorCode.CANT_BE_EMPTY)

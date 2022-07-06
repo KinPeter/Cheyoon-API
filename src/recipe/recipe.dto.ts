@@ -22,6 +22,9 @@ export class RecipeBase {
   photoUrl: string
 
   @ApiProperty()
+  cookingTime: string
+
+  @ApiProperty()
   tags: string[]
 }
 

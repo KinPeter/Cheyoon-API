@@ -34,6 +34,13 @@ export class RecipeController {
   constructor(private readonly recipeService: RecipeService) {}
 
   @Get('/list')
+  @ApiOperation({ summary: 'List base info of all public recipes' })
+  @ApiOkResponse({ type: [RecipeListItem], description: 'List of recipes' })
+  public async listAllPublic(): Promise<RecipeListItem[]> {
+    return this.recipeService.listPublicRecipes()
+  }
+
+  @Get('/my-list')
   @UseGuards(AuthGuard())
   @ApiOperation({ summary: 'List base info of recipes for a user' })
   @ApiBearerAuth()

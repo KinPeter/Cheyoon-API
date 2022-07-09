@@ -8,6 +8,7 @@ export const IngredientSchema = yup.object({
 })
 
 export const RecipeInputSchema = yup.object({
+  public: yup.boolean().required(ErrorCode.FIELD_REQUIRED),
   name: yup.string().required(ErrorCode.FIELD_REQUIRED),
   photoUrl: yup.string().url(ErrorCode.INVALID_FORMAT).required(ErrorCode.FIELD_REQUIRED),
   instructions: yup.string().required(ErrorCode.FIELD_REQUIRED),

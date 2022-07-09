@@ -31,6 +31,9 @@ export class RecipeBase {
 @UseSchema(RecipeInputSchema)
 export class RecipeInput extends RecipeBase {
   @ApiProperty()
+  public: boolean
+
+  @ApiProperty()
   instructions: string
 
   @ApiProperty()

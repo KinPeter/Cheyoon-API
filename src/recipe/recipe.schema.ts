@@ -22,6 +22,10 @@ export class Recipe {
 
   @ApiProperty()
   @Prop({ required: true })
+  public: boolean
+
+  @ApiProperty()
+  @Prop({ required: true })
   name: string
 
   @ApiProperty()

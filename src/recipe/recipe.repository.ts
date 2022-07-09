@@ -10,11 +10,21 @@ import { ErrorCode } from '../common/error-codes'
 
 @Injectable()
 export class RecipeRepository {
+  private readonly listProperties = ['id', 'updatedAt', 'name', 'photoUrl', 'tags', 'cookingTime']
+
   constructor(@InjectModel(Recipe.name) private recipeModel: Model<RecipeDocument>) {}
+
+  public async findAllPublic(): Promise<Recipe[]> {
+    return await this.recipeModel
+      .find({ public: true }, this.listProperties, {
+        sort: { updatedAt: -1 },
+      })
+      .exec()
+  }
 
   public async findAllForUser(userId: UUID): Promise<Recipe[]> {
     return await this.recipeModel
-      .find({ userId }, ['id', 'updatedAt', 'name', 'photoUrl', 'tags', 'cookingTime'], {
+      .find({ userId }, this.listProperties, {
         sort: { updatedAt: -1 },
       })
       .exec()

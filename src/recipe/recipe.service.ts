@@ -9,6 +9,10 @@ import { IdResponse } from '../common/id-response'
 export class RecipeService {
   constructor(private readonly recipeRepository: RecipeRepository) {}
 
+  public async listPublicRecipes(): Promise<RecipeListItem[]> {
+    return this.recipeRepository.findAllPublic()
+  }
+
   public async listUserRecipes(userId: UUID): Promise<RecipeListItem[]> {
     return this.recipeRepository.findAllForUser(userId)
   }

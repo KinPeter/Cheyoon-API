@@ -22,6 +22,15 @@ export class RecipeRepository {
       .exec()
   }
 
+  public async findRecentPublic(): Promise<Recipe[]> {
+    return await this.recipeModel
+      .find({ public: true }, this.listProperties, {
+        sort: { updatedAt: -1 },
+        limit: 6,
+      })
+      .exec()
+  }
+
   public async findAllForUser(userId: UUID): Promise<Recipe[]> {
     return await this.recipeModel
       .find({ userId }, this.listProperties, {

@@ -40,6 +40,13 @@ export class RecipeController {
     return this.recipeService.listPublicRecipes()
   }
 
+  @Get('/list-recent')
+  @ApiOperation({ summary: 'List base info of recent public recipes' })
+  @ApiOkResponse({ type: [RecipeListItem], description: 'List of recipes' })
+  public async listRecentPublic(): Promise<RecipeListItem[]> {
+    return this.recipeService.listRecentRecipes()
+  }
+
   @Get('/my-list')
   @UseGuards(AuthGuard())
   @ApiOperation({ summary: 'List base info of recipes for a user' })

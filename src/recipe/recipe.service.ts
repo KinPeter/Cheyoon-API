@@ -13,6 +13,10 @@ export class RecipeService {
     return this.recipeRepository.findAllPublic()
   }
 
+  public async listRecentRecipes(): Promise<RecipeListItem[]> {
+    return this.recipeRepository.findRecentPublic()
+  }
+
   public async listUserRecipes(userId: UUID): Promise<RecipeListItem[]> {
     return this.recipeRepository.findAllForUser(userId)
   }

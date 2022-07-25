@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common'
+import { ForbiddenException, Injectable } from '@nestjs/common'
 import { RecipeRepository } from './recipe.repository'
 import { UUID } from '../common/uuid'
 import { RecipeInput, RecipeListItem } from './recipe.dto'
@@ -18,7 +18,13 @@ export class RecipeService {
   }
 
   public async getById(id: UUID, userId: string): Promise<Recipe> {
-    return this.recipeRepository.findOne(id, userId)
+    const recipe = await this.recipeRepository.findOne(id)
+
+    if (!recipe.public && userId !== recipe.userId) {
+      throw new ForbiddenException()
+    }
+
+    return recipe
   }
 
   public async createRecipe(userId: UUID, data: RecipeInput): Promise<IdResponse> {

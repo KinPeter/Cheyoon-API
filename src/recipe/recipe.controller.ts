@@ -53,15 +53,12 @@ export class RecipeController {
   }
 
   @Get('/:id')
-  @UseGuards(AuthGuard())
   @ApiOperation({ summary: 'Get a recipe with all details by ID' })
-  @ApiBearerAuth()
   @ApiOkResponse({ type: Recipe, description: 'A recipe' })
   @ApiNotFoundResponse({ description: 'Recipe not found' })
-  @ApiUnauthorizedResponse({ description: 'User is not authenticated' })
   @ApiForbiddenResponse({ description: 'User has no access rights to the requested content' })
   public async getById(@GetUser() user: UserDocument, @Param('id') id: UUID): Promise<Recipe> {
-    return this.recipeService.getById(id, user.id)
+    return this.recipeService.getById(id, user?.id)
   }
 
   @Post()

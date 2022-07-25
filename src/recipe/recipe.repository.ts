@@ -30,8 +30,8 @@ export class RecipeRepository {
       .exec()
   }
 
-  public async findOne(id: UUID, userId: UUID): Promise<Recipe> {
-    const document = await this.recipeModel.findOne({ id, userId }).exec()
+  public async findOne(id: UUID): Promise<Recipe> {
+    const document = await this.recipeModel.findOne({ id }).exec()
     if (!document) {
       throw new NotFoundException(ErrorCode.ITEM_NOT_FOUND)
     }

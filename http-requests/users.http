@@ -1,0 +1,39 @@
+### Sign up
+POST {{url}}/user/signup
+Content-Type: application/json
+
+{
+  "email": "peti01@test.com",
+  "password": "pass123"
+}
+
+### Log in
+POST {{url}}/user/login
+Content-Type: application/json
+
+{
+  "email": "peti01@test.com",
+  "password": "pass123"
+}
+
+### Token refresh
+POST {{url}}/user/token-refresh
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+### Change password
+PUT {{url}}/user/change-password
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "oldPassword": "pass123",
+  "password": "petike"
+}
+
+### Delete user
+DELETE {{url}}/user
+Authorization: Bearer {{token}}
+
+###
+

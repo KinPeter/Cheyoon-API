@@ -1,0 +1,67 @@
+### Get all public recipes
+GET {{url}}/recipe/list
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+
+### Get recent recipes
+GET {{url}}/recipe/list-recent
+
+### Get my recipes
+GET {{url}}/recipe/my-list
+Authorization: Bearer {{token}}
+
+### Get recipe by ID
+GET {{url}}/recipe/a9758f0a-1f90-46ad-a138-31a9fe8b9d6b
+
+### Create recipe
+POST {{url}}/recipe
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "Bolognese",
+  "public": true,
+  "photoUrl": "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/delish-bolognese-horizontal-1-1540572556.jpg",
+  "tags": [
+    "pork", "pasta", "tomato"
+  ],
+  "instructions": "string",
+  "servings": 2,
+  "cookingTime": "50 mins",
+  "ingredients": [
+    { "amount": 2, "unit": "cup", "material": "rice" },
+    { "amount": 0.5, "unit": "kg", "material": "pork" },
+    { "amount": 2, "unit": "pc", "material": "carrot" }
+  ]
+}
+
+### Update recipe
+PUT {{url}}/recipe/a9758f0a-1f90-46ad-a138-31a9fe8b9d6b
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "Bolognese",
+  "public": true,
+  "photoUrl": "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/delish-bolognese-horizontal-1-1540572556.jpg",
+  "tags": [
+    "pork", "pasta", "tomato"
+  ],
+  "instructions": "Cook it well",
+  "servings": 2,
+  "cookingTime": "50 mins",
+  "ingredients": [
+    { "amount": 2, "unit": "cup", "material": "rice" },
+    { "amount": 0.5, "unit": "kg", "material": "pork" },
+    { "amount": 2, "unit": "pc", "material": "carrot" }
+  ]
+}
+
+### Delete recipe
+DELETE {{url}}/recipe/a9758f0a-1f90-46ad-a138-31a9fe8b9d6b
+Content-Type: application/json
+Authorization: Bearer {{token}}

@@ -14,8 +14,12 @@ GET {{url}}/recipe/list-recent
 GET {{url}}/recipe/my-list
 Authorization: Bearer {{token}}
 
-### Get recipe by ID
-GET {{url}}/recipe/a9758f0a-1f90-46ad-a138-31a9fe8b9d6b
+### Get public recipe by ID
+GET {{url}}/recipe/41454bee-b127-4dcb-9ffc-885e9e74e7bc
+
+### Get private recipe by ID
+GET {{url}}/recipe/private/dc37aff2-5fb8-421a-a957-26d68b61ff0b
+Authorization: Bearer {{token}}
 
 ### Create recipe
 POST {{url}}/recipe

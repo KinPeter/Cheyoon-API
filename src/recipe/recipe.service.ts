@@ -21,7 +21,7 @@ export class RecipeService {
     return this.recipeRepository.findAllForUser(userId)
   }
 
-  public async getById(id: UUID, userId: string): Promise<Recipe> {
+  public async getById(id: UUID, userId?: string): Promise<Recipe> {
     const recipe = await this.recipeRepository.findOne(id)
 
     if (!recipe.public && userId !== recipe.userId) {

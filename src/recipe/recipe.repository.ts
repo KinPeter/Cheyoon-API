@@ -10,7 +10,15 @@ import { ErrorCode } from '../common/error-codes'
 
 @Injectable()
 export class RecipeRepository {
-  private readonly listProperties = ['id', 'updatedAt', 'name', 'photoUrl', 'tags', 'cookingTime']
+  private readonly listProperties = [
+    'id',
+    'updatedAt',
+    'name',
+    'photoUrl',
+    'tags',
+    'cookingTime',
+    'public',
+  ]
 
   constructor(@InjectModel(Recipe.name) private recipeModel: Model<RecipeDocument>) {}
 

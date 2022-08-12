@@ -64,7 +64,21 @@ export class RecipeController {
   @ApiOkResponse({ type: Recipe, description: 'A recipe' })
   @ApiNotFoundResponse({ description: 'Recipe not found' })
   @ApiForbiddenResponse({ description: 'User has no access rights to the requested content' })
-  public async getById(@GetUser() user: UserDocument, @Param('id') id: UUID): Promise<Recipe> {
+  public async getById(@Param('id') id: UUID): Promise<Recipe> {
+    return this.recipeService.getById(id)
+  }
+
+  @Get('/private/:id')
+  @UseGuards(AuthGuard())
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Get a private recipe with all details by ID' })
+  @ApiOkResponse({ type: Recipe, description: 'A recipe' })
+  @ApiNotFoundResponse({ description: 'Recipe not found' })
+  @ApiForbiddenResponse({ description: 'User has no access rights to the requested content' })
+  public async getPrivateById(
+    @GetUser() user: UserDocument,
+    @Param('id') id: UUID
+  ): Promise<Recipe> {
     return this.recipeService.getById(id, user?.id)
   }
 

@@ -1,0 +1,39 @@
+### Get data for user
+GET {{url}}/acnh
+Authorization: Bearer {{token}}
+
+### Add villager to village
+POST {{url}}/acnh/village/add
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "villagerId": 203
+}
+
+### Remove villager from village
+POST {{url}}/acnh/village/remove
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "villagerId": 3
+}
+
+### Add villager to favorites
+POST {{url}}/acnh/favorites/add
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "villagerId": 45
+}
+
+### Remove villager from favorites
+POST {{url}}/acnh/favorites/remove
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "villagerId":45
+}

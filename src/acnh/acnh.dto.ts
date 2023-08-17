@@ -4,15 +4,15 @@ import { AcnhInputSchema, VillagerIdInputSchema } from './acnh.validations'
 
 @UseSchema(AcnhInputSchema)
 export class AcnhInput {
-  @ApiProperty({ type: [Number] })
-  villagers: number[]
+  @ApiProperty({ type: [String] })
+  villagers: string[]
 
-  @ApiProperty({ type: [Number] })
-  favorites: number[]
+  @ApiProperty({ type: [String] })
+  favorites: string[]
 }
 
 @UseSchema(VillagerIdInputSchema)
 export class VillagerIdInput {
   @ApiProperty()
-  villagerId: number
+  villagerId: string
 }

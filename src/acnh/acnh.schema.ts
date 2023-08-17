@@ -19,13 +19,13 @@ export class AcnhData {
   @Prop({ required: true })
   userId: UUID
 
-  @ApiProperty({ type: [Number] })
-  @Prop({ type: [Number], required: true })
-  villagers: number[]
+  @ApiProperty({ type: [String] })
+  @Prop({ type: [String], required: true })
+  villagers: string[]
 
-  @ApiProperty({ type: [Number] })
-  @Prop({ type: [Number], required: true })
-  favorites: number[]
+  @ApiProperty({ type: [String] })
+  @Prop({ type: [String], required: true })
+  favorites: string[]
 }
 
 export const AcnhSchema = SchemaFactory.createForClass(AcnhData)

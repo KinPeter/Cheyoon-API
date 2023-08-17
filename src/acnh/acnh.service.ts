@@ -19,7 +19,7 @@ export class AcnhService {
     return data
   }
 
-  public async addToFavorites(userId: UUID, villagerId: number): Promise<AcnhData> {
+  public async addToFavorites(userId: UUID, villagerId: string): Promise<AcnhData> {
     const data = await this.acnhRepository.findForUser(userId)
     if (!data) {
       return await this.acnhRepository.create(userId, { villagers: [], favorites: [villagerId] })
@@ -36,7 +36,7 @@ export class AcnhService {
     return this.acnhRepository.findById(data.id)
   }
 
-  public async removeFromFavorites(userId: UUID, villagerId: number): Promise<AcnhData> {
+  public async removeFromFavorites(userId: UUID, villagerId: string): Promise<AcnhData> {
     const data = await this.acnhRepository.findForUser(userId)
     if (!data) {
       throw new NotFoundException(ErrorCode.ITEM_NOT_FOUND)
@@ -58,7 +58,7 @@ export class AcnhService {
     return this.acnhRepository.findById(data.id)
   }
 
-  public async addToVillagers(userId: UUID, villagerId: number): Promise<AcnhData> {
+  public async addToVillagers(userId: UUID, villagerId: string): Promise<AcnhData> {
     const data = await this.acnhRepository.findForUser(userId)
     if (!data) {
       return await this.acnhRepository.create(userId, { villagers: [villagerId], favorites: [] })
@@ -78,7 +78,7 @@ export class AcnhService {
     return this.acnhRepository.findById(data.id)
   }
 
-  public async removeFromVillagers(userId: UUID, villagerId: number): Promise<AcnhData> {
+  public async removeFromVillagers(userId: UUID, villagerId: string): Promise<AcnhData> {
     const data = await this.acnhRepository.findForUser(userId)
     if (!data) {
       throw new NotFoundException(ErrorCode.ITEM_NOT_FOUND)
